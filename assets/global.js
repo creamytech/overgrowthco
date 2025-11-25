@@ -1330,3 +1330,26 @@ class CartPerformance {
     );
   }
 }
+
+/* =========================================
+   OVERGROWTH: SCROLL REVEAL ANIMATION
+   ========================================= */
+document.addEventListener('DOMContentLoaded', () => {
+  const revealElements = document.querySelectorAll('.reveal-on-scroll');
+
+  const revealObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target); // Only animate once
+      }
+    });
+  }, {
+    root: null,
+    threshold: 0.15, // Trigger when 15% visible
+    rootMargin: "0px"
+  });
+
+  revealElements.forEach(el => revealObserver.observe(el));
+});
+
