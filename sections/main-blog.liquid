@@ -14,6 +14,104 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+
+  /* Field Journal Styling */
+  .main-blog {
+    background-color: #EFEBD6; /* Cream */
+    background-image: linear-gradient(#E0E0E0 1px, transparent 1px);
+    background-size: 100% 2rem; /* Ruled Paper Lines */
+    min-height: 100vh;
+  }
+
+  .title--primary {
+    font-family: var(--font-heading-family); /* Cooper Black */
+    color: var(--color-overgrowth-forest);
+    text-align: center;
+    font-size: 4rem;
+    margin-bottom: 3rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-shadow: 2px 2px 0 rgba(26, 59, 40, 0.1);
+  }
+
+  .blog-articles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 3rem;
+  }
+
+  .article-card-wrapper {
+    background-color: #FDFBF7; /* Paper */
+    border: 1px solid #ccc;
+    padding: 2rem;
+    box-shadow: 3px 3px 8px rgba(0,0,0,0.1);
+    transform: rotate(-1deg);
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .article-card-wrapper:hover {
+    transform: rotate(0deg) scale(1.02);
+    box-shadow: 5px 5px 12px rgba(0,0,0,0.15);
+    z-index: 2;
+  }
+
+  /* "Paper Clip" Visual */
+  .article-card-wrapper::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 12px;
+    background-color: #C0C0C0; /* Silver */
+    border-radius: 6px;
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    z-index: 3;
+  }
+
+  .article-card__title {
+    font-family: var(--font-heading-family);
+    font-size: 1.8rem;
+    color: var(--color-overgrowth-forest);
+    margin-bottom: 0.5rem;
+  }
+
+  .article-card__info {
+    font-family: var(--font-body-family); /* Courier */
+    font-size: 0.8rem;
+    color: var(--color-overgrowth-rust);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-bottom: 1px dashed var(--color-overgrowth-forest);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    display: inline-block;
+  }
+
+  .article-card__excerpt {
+    font-family: var(--font-body-family);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #333;
+  }
+
+  .article-card__link {
+    display: inline-block;
+    margin-top: 1rem;
+    font-family: var(--font-heading-family);
+    text-decoration: none;
+    color: var(--color-overgrowth-forest);
+    border-bottom: 2px solid var(--color-overgrowth-forest);
+    transition: color 0.2s;
+  }
+
+  .article-card__link:hover {
+    color: var(--color-overgrowth-rust);
+    border-color: var(--color-overgrowth-rust);
+  }
+
 {%- endstyle -%}
 
 {%- paginate blog.articles by 6 -%}
@@ -22,24 +120,49 @@
       {{ blog.title | escape }}
     </h1>
 
-    <div class="blog-articles {% if section.settings.layout == 'collage' %}blog-articles--collage{% endif %}">
+    <div class="blog-articles">
       {%- for article in blog.articles -%}
-        <div
-          class="blog-articles__article article{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
-          {% if settings.animations_reveal_on_scroll %}
-            data-cascade
-            style="--animation-order: {{ forloop.index }};"
-          {% endif %}
-        >
-          {%- render 'article-card',
-            article: article,
-            media_height: section.settings.image_height,
-            media_aspect_ratio: article.image.aspect_ratio,
-            show_image: section.settings.show_image,
-            show_date: section.settings.show_date,
-            show_author: section.settings.show_author,
-            show_excerpt: true
-          -%}
+        <div class="blog-articles__article article">
+          <div class="article-card-wrapper">
+            {%- if article.image -%}
+              <div class="article-card__image-wrapper" style="margin-bottom: 1.5rem;">
+                 <img
+                    srcset="{{ article.image | image_url: width: 350 }} 350w, {{ article.image | image_url: width: 700 }} 700w"
+                    src="{{ article.image | image_url: width: 350 }}"
+                    alt="{{ article.image.alt | escape }}"
+                    loading="lazy"
+                    width="{{ article.image.width }}"
+                    height="{{ article.image.height }}"
+                    style="width: 100%; height: auto; border: 4px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"
+                  >
+              </div>
+            {%- endif -%}
+
+            <h2 class="article-card__title">
+              <a href="{{ article.url }}" class="full-unstyled-link">
+                {{ article.title | escape }}
+              </a>
+            </h2>
+
+            <div class="article-card__info">
+              {%- if section.settings.show_date -%}
+                <span>LOGGED: {{ article.published_at | time_tag: format: 'date' }}</span>
+              {%- endif -%}
+              {%- if section.settings.show_author -%}
+                <span> • AGENT: {{ article.author }}</span>
+              {%- endif -%}
+            </div>
+
+            {%- if section.settings.show_excerpt and article.excerpt_or_content.size > 0 -%}
+              <p class="article-card__excerpt">
+                {{ article.excerpt_or_content | strip_html | truncatewords: 30 }}
+              </p>
+            {%- endif -%}
+
+            <a href="{{ article.url }}" class="article-card__link">
+              READ ENTRY &rarr;
+            </a>
+          </div>
         </div>
       {%- endfor -%}
     </div>
@@ -57,50 +180,10 @@
   "class": "section",
   "settings": [
     {
-      "type": "select",
-      "id": "layout",
-      "options": [
-        {
-          "value": "grid",
-          "label": "t:sections.main-blog.settings.layout.options__1.label"
-        },
-        {
-          "value": "collage",
-          "label": "t:sections.main-blog.settings.layout.options__2.label"
-        }
-      ],
-      "default": "collage",
-      "label": "t:sections.main-blog.settings.layout.label"
-    },
-    {
       "type": "checkbox",
       "id": "show_image",
       "default": true,
       "label": "t:sections.main-blog.settings.show_image.label"
-    },
-    {
-      "type": "select",
-      "id": "image_height",
-      "options": [
-        {
-          "value": "adapt",
-          "label": "t:sections.main-blog.settings.image_height.options__1.label"
-        },
-        {
-          "value": "small",
-          "label": "t:sections.main-blog.settings.image_height.options__2.label"
-        },
-        {
-          "value": "medium",
-          "label": "t:sections.main-blog.settings.image_height.options__3.label"
-        },
-        {
-          "value": "large",
-          "label": "t:sections.main-blog.settings.image_height.options__4.label"
-        }
-      ],
-      "default": "medium",
-      "label": "t:sections.main-blog.settings.image_height.label"
     },
     {
       "type": "checkbox",
@@ -113,6 +196,12 @@
       "id": "show_author",
       "default": false,
       "label": "t:sections.main-blog.settings.show_author.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_excerpt",
+      "default": true,
+      "label": "Show Excerpt"
     },
     {
       "type": "header",
