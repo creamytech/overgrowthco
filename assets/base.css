@@ -6,6 +6,32 @@
   --focused-base-outline: 0.2rem solid rgba(var(--color-foreground), 0.5);
   --focused-base-outline-offset: 0.3rem;
   --focused-base-box-shadow: 0 0 0 0.3rem rgb(var(--color-background)), 0 0 0.5rem 0.4rem rgba(var(--color-foreground), 0.3);
+
+  /* Overgrowth Global Variables */
+  --color-overgrowth-cream: #EFEBD6;
+  --color-overgrowth-paper: #E8E4D9;
+  --color-overgrowth-forest: #1A3828;
+  --color-overgrowth-neon: #39FF14;
+  --color-overgrowth-rust: #C17A5B;
+
+  /* Typography Overrides */
+  --font-heading-family: "Cooper Black", "Goudy Old Style", "Souvenir", serif;
+  --font-body-family: "Courier Prime", "Space Mono", "IBM Plex Mono", monospace;
+}
+
+/* Global Texture Overlay */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.15;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
 }
 
 .product-card-wrapper .card,
