@@ -1,0 +1,282 @@
+{% schema %}
+{
+  "name": "Radio Tuner",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image"
+    },
+    {
+      "type": "text",
+      "id": "correct_frequency",
+      "label": "Correct Frequency",
+      "default": "96.5"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Radio Tuner"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .radio-tuner-section {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    background-color: #000; /* Deepest dark */
+    color: var(--color-overgrowth-cream);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-body-family);
+  }
+
+  .radio-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+    opacity: 0.4;
+    filter: grayscale(100%) contrast(120%);
+  }
+
+  .static-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.8;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .tuner-interface {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    width: 90%;
+    max-width: 600px;
+    background: rgba(26, 56, 40, 0.9); /* Forest Green with opacity */
+    padding: 3rem;
+    border: 2px solid var(--color-overgrowth-forest);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+  }
+
+  h1 {
+    font-family: var(--font-heading-family);
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    color: var(--color-overgrowth-cream);
+    text-transform: uppercase;
+  }
+
+  .status-text {
+    font-size: 1.5rem;
+    margin-bottom: 3rem;
+    color: var(--color-overgrowth-rust);
+    font-weight: bold;
+    letter-spacing: 0.1em;
+  }
+
+  .frequency-display {
+    font-size: 5rem;
+    font-family: 'Courier Prime', monospace;
+    color: var(--color-overgrowth-cream);
+    margin-bottom: 2rem;
+    text-shadow: 0 0 10px rgba(239, 235, 214, 0.5);
+  }
+
+  .frequency-slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    background: #000;
+    outline: none;
+    opacity: 0.7;
+    transition: opacity .2s;
+    margin-bottom: 3rem;
+    border: 1px solid var(--color-overgrowth-forest);
+  }
+
+  .frequency-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 40px;
+    background: var(--color-overgrowth-rust);
+    cursor: pointer;
+    border: 2px solid #000;
+  }
+
+  .frequency-slider::-moz-range-thumb {
+    width: 25px;
+    height: 40px;
+    background: var(--color-overgrowth-rust);
+    cursor: pointer;
+    border: 2px solid #000;
+  }
+
+  .enter-button {
+    background-color: #000;
+    color: #333;
+    border: 2px solid #333;
+    padding: 1.5rem 4rem;
+    font-size: 1.5rem;
+    font-family: var(--font-body-family);
+    text-transform: uppercase;
+    cursor: not-allowed;
+    transition: all 0.3s ease;
+    pointer-events: none;
+  }
+
+  .enter-button.active {
+    background-color: var(--color-overgrowth-neon);
+    color: #000;
+    border-color: var(--color-overgrowth-neon);
+    box-shadow: 0 0 15px var(--color-overgrowth-neon);
+    cursor: pointer;
+    pointer-events: auto;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0% { box-shadow: 0 0 15px var(--color-overgrowth-neon); }
+    50% { box-shadow: 0 0 25px var(--color-overgrowth-neon); }
+    100% { box-shadow: 0 0 15px var(--color-overgrowth-neon); }
+  }
+
+  .password-form-container {
+    display: none; /* Hidden by default */
+  }
+  
+  .password-form-container.visible {
+    display: block;
+    margin-top: 2rem;
+  }
+  
+  .password-input {
+      background: #000;
+      border: 1px solid var(--color-overgrowth-neon);
+      color: var(--color-overgrowth-neon);
+      padding: 1rem;
+      font-family: monospace;
+      width: 100%;
+      margin-bottom: 1rem;
+  }
+  
+  .password-submit {
+      background: var(--color-overgrowth-neon);
+      color: #000;
+      border: none;
+      padding: 1rem 2rem;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+  }
+
+</style>
+
+<div class="radio-tuner-section">
+  {% if section.settings.background_image != blank %}
+    <div class="radio-background" style="background-image: url('{{ section.settings.background_image | image_url: width: 2000 }}');"></div>
+  {% else %}
+    <div class="radio-background" style="background-color: #111;"></div>
+  {% endif %}
+  
+  <div class="static-overlay" id="staticOverlay"></div>
+
+  <div class="tuner-interface">
+    <h1>Overgrowth</h1>
+    <div class="status-text" id="statusText">SIGNAL LOST</div>
+    
+    <div class="frequency-display" id="freqDisplay">88.0</div>
+    
+    <input type="range" min="88.0" max="108.0" step="0.1" value="88.0" class="frequency-slider" id="freqSlider">
+    
+    <button class="enter-button" id="enterBtn">Establish Signal</button>
+
+    <div class="password-form-container" id="passwordFormContainer">
+        {% form 'storefront_password' %}
+          {{ form.errors | default_errors }}
+          <div class="password-field field">
+            <input
+              class="password-input"
+              type="password"
+              name="password"
+              id="Password"
+              placeholder="Enter Access Code"
+            >
+            <button type="submit" class="password-submit">
+              ENTER
+            </button>
+          </div>
+        {% endform %}
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const slider = document.getElementById('freqSlider');
+    const display = document.getElementById('freqDisplay');
+    const overlay = document.getElementById('staticOverlay');
+    const enterBtn = document.getElementById('enterBtn');
+    const statusText = document.getElementById('statusText');
+    const passwordForm = document.getElementById('passwordFormContainer');
+    
+    const correctFreq = {{ section.settings.correct_frequency | default: 96.5 }};
+    const tolerance = 0.2; // How close they need to be
+
+    slider.addEventListener('input', function() {
+      const val = parseFloat(this.value);
+      display.textContent = val.toFixed(1);
+      
+      // Calculate distance from correct frequency
+      const distance = Math.abs(val - correctFreq);
+      
+      // Map distance to static opacity (closer = less static)
+      // Max distance is roughly 20 (108 - 88). 
+      // We want static to be 0 at distance 0, and 0.8 at distance > 5
+      let staticOpacity = 0.8;
+      if (distance < 5) {
+        staticOpacity = (distance / 5) * 0.8;
+      }
+      // Ensure minimum visibility of static
+      staticOpacity = Math.max(0.1, staticOpacity);
+      overlay.style.opacity = staticOpacity;
+
+      // Check if unlocked
+      if (distance <= tolerance) {
+        enterBtn.classList.add('active');
+        statusText.textContent = "SIGNAL DETECTED";
+        statusText.style.color = "var(--color-overgrowth-neon)";
+      } else {
+        enterBtn.classList.remove('active');
+        statusText.textContent = "SEARCHING...";
+        statusText.style.color = "var(--color-overgrowth-rust)";
+      }
+    });
+
+    enterBtn.addEventListener('click', function() {
+        if (this.classList.contains('active')) {
+            // Reveal the actual password form
+            this.style.display = 'none';
+            passwordForm.classList.add('visible');
+            statusText.textContent = "ENTER ACCESS CODE";
+        }
+    });
+  });
+</script>
