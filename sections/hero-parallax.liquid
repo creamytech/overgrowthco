@@ -1,0 +1,156 @@
+{% schema %}
+{
+  "name": "Parallax Hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image (Gas Station/Sky)"
+    },
+    {
+      "type": "image_picker",
+      "id": "foreground_image",
+      "label": "Foreground Image (Weeds/Horse)"
+    },
+    {
+      "type": "text",
+      "id": "sign_text",
+      "label": "Sign Text",
+      "default": "WE ARE OPEN"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Parallax Hero"
+    }
+  ]
+}
+{% endschema %}
+
+<style>
+  .parallax-hero {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    background-color: var(--color-overgrowth-cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .parallax-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120%; /* Taller for parallax movement */
+    background-size: cover;
+    background-position: center;
+    will-change: transform;
+  }
+
+  .layer-bg {
+    z-index: 1;
+    transform: translateZ(0);
+  }
+
+  .layer-fg {
+    z-index: 3;
+    pointer-events: none;
+  }
+
+  .sign-container {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    transform-origin: top center;
+    animation: sway 3s ease-in-out infinite alternate;
+  }
+
+  .sign-board {
+    background: var(--color-overgrowth-rust);
+    color: var(--color-overgrowth-cream);
+    padding: 1rem 2rem;
+    border: 4px solid #000;
+    font-family: var(--font-heading-family);
+    font-size: 2rem;
+    text-transform: uppercase;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    text-align: center;
+    position: relative;
+  }
+
+  /* Chains holding the sign */
+  .sign-container::before,
+  .sign-container::after {
+    content: '';
+    position: absolute;
+    top: -100px;
+    width: 4px;
+    height: 100px;
+    background: #333;
+  }
+
+  .sign-container::before { left: 20px; }
+  .sign-container::after { right: 20px; }
+
+  @keyframes sway {
+    0% { transform: translateX(-50%) rotate(2deg); }
+    100% { transform: translateX(-50%) rotate(-2deg); }
+  }
+
+  @media screen and (max-width: 750px) {
+    .parallax-hero {
+      height: 60vh; /* Shorter on mobile */
+    }
+    .sign-board {
+      font-size: 1.5rem;
+    }
+  }
+</style>
+
+<div class="parallax-hero">
+  {% if section.settings.background_image != blank %}
+    <div class="parallax-layer layer-bg" style="background-image: url('{{ section.settings.background_image | image_url: width: 2000 }}');"></div>
+  {% else %}
+    <div class="parallax-layer layer-bg" style="background-color: #EFEBD6;"></div>
+  {% endif %}
+
+  <div class="sign-container">
+    <div class="sign-board">
+      {{ section.settings.sign_text }}
+    </div>
+  </div>
+
+  {% if section.settings.foreground_image != blank %}
+    <div class="parallax-layer layer-fg" style="background-image: url('{{ section.settings.foreground_image | image_url: width: 2000 }}');"></div>
+  {% endif %}
+</div>
+
+<script>
+  document.addEventListener('scroll', function() {
+    const scrolled = window.scrollY;
+    const hero = document.querySelector('.parallax-hero');
+    
+    if (hero) {
+        const limit = hero.offsetHeight;
+        if (scrolled > limit) return;
+
+        const bg = hero.querySelector('.layer-bg');
+        const fg = hero.querySelector('.layer-fg');
+
+        if (bg) bg.style.transform = `translateY(${scrolled * 0.4}px)`;
+        if (fg) fg.style.transform = `translateY(${scrolled * 0.1}px)`; // Moves slower/less to look closer? Actually foreground should move faster/more to look closer in standard parallax, but usually we want bg to move slower than scroll. 
+        // Let's adjust: BG moves with scroll (slower), FG stays put or moves differently.
+        // Standard simple parallax: BG moves slower than scroll speed.
+        // Let's try: BG moves down at 0.5 speed. FG moves up or stays? 
+        // If FG is "closer", it should move "faster" relative to the world, meaning it scrolls away faster? 
+        // Actually, usually we translate BG down to make it look far away (moving with camera).
+        
+        if (bg) bg.style.transform = `translateY(${scrolled * 0.5}px)`;
+        if (fg) fg.style.transform = `translateY(-${scrolled * 0.2}px)`; // Move up slightly to enhance depth
+    }
+  });
+</script>

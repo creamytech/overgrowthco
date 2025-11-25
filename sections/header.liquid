@@ -270,11 +270,60 @@
         {%- endcase -%}
       {%- endfor -%}
 
+<style>
+  /* Roadside Signage Nav Links */
+  .list-menu__item--link {
+    font-family: var(--font-body-family);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border: 2px solid transparent;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+  }
+
+  .list-menu__item--link:hover {
+    border-color: var(--color-overgrowth-forest);
+    background-color: var(--color-overgrowth-paper);
+    text-decoration: none;
+  }
+
+  .list-menu__item--active {
+    border-color: var(--color-overgrowth-forest);
+    background-color: var(--color-overgrowth-forest);
+    color: var(--color-overgrowth-cream);
+  }
+
+  /* Skeleton Horse Cart Icon */
+  .icon-skeleton-horse {
+    width: 2.5rem;
+    height: 2.5rem;
+    fill: currentColor;
+    transition: fill 0.3s ease;
+  }
+
+  .header__icon--cart:hover .icon-skeleton-horse {
+    fill: var(--color-overgrowth-neon);
+    filter: drop-shadow(0 0 5px var(--color-overgrowth-neon));
+  }
+  
+  .cart-count-bubble {
+      background-color: var(--color-overgrowth-neon);
+      color: #000;
+  }
+</style>
+
       <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
           {% if cart == empty %}
-            <span class="svg-wrapper">{{'icon-cart-empty.svg' | inline_asset_content }}</span>
+            <svg class="icon icon-skeleton-horse" viewBox="0 0 100 100">
+              <path d="M20,50 Q30,40 40,50 T60,50 T80,40 L90,60 L80,80 L60,70 L40,80 L20,60 Z M35,55 A2,2 0 1,1 39,55 A2,2 0 1,1 35,55 M65,55 A2,2 0 1,1 69,55 A2,2 0 1,1 65,55" fill="currentColor"/>
+              <!-- Placeholder Skeleton Horse Head Shape - Replace with actual SVG path if available -->
+            </svg>
           {% else %}
-            <span class="svg-wrapper">{{'icon-cart.svg' | inline_asset_content }}</span>
+            <svg class="icon icon-skeleton-horse" viewBox="0 0 100 100">
+               <path d="M20,50 Q30,40 40,50 T60,50 T80,40 L90,60 L80,80 L60,70 L40,80 L20,60 Z M35,55 A2,2 0 1,1 39,55 A2,2 0 1,1 35,55 M65,55 A2,2 0 1,1 69,55 A2,2 0 1,1 65,55" fill="currentColor"/>
+               <circle cx="37" cy="55" r="1.5" fill="#39FF14" /> <!-- Glowing Eye Left -->
+               <circle cx="67" cy="55" r="1.5" fill="#39FF14" /> <!-- Glowing Eye Right -->
+            </svg>
           {% endif %}
         <span class="visually-hidden">{{ 'templates.cart.cart' | t }}</span>
         {%- if cart != empty -%}
