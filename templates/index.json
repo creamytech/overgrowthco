@@ -13,6 +13,7 @@
       "type": "hero-parallax",
       "settings": {
         "background_image": "shopify://shop_images/Untitled_design_7.png",
+        "foreground_image": "shopify://shop_images/Untitled_design_7.png",
         "sign_text": "WE ARE OPEN"
       }
     },
