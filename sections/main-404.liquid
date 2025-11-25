@@ -1,23 +1,16 @@
-<style type="text/css">
-  .template-404 .title + * {
-    margin-top: 1rem;
-  }
-
-  @media screen and (min-width: 750px) {
-    .template-404 .title + * {
-      margin-top: 2rem;
-    }
-  }
-</style>
-
-<div class="template-404 page-width page-margin center">
-  <p>
-    {{ 'templates.404.subtext' | t }}
-  </p>
-  <h1 class="title">
-    {{ 'templates.404.title' | t }}
-  </h1>
-  <a href="{{ routes.all_products_collection_url }}" class="button">
-    {{ 'general.continue_shopping' | t }}
-  </a>
+<div class="zone-lost-container">
+  <div class="flashlight-overlay"></div>
+  <div class="zone-content center">
+    <h1 class="glitch-text" data-text="ZONE LOST">ZONE LOST</h1>
+    <p class="zone-subtext">SIGNAL LOST. NAVIGATION SYSTEMS OFFLINE.</p>
+    <p class="zone-instruction">SEARCH FOR EMERGENCY EXIT.</p>
+    <div class="exit-container">
+      <a href="{{ routes.root_url }}" class="emergency-exit-link">EMERGENCY EXIT</a>
+    </div>
+  </div>
 </div>
+
+<script>
+  // Simple inline script to ensure it runs immediately, but main logic will be in global-interactivity.js
+  document.body.classList.add('zone-lost-active');
+</script>
