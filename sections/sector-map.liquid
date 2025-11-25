@@ -55,15 +55,17 @@
 
 <style>
   .sector-map {
-    background-color: #0d1f15; /* Darker Forest Green */
-    padding: 4rem 2rem;
-    color: var(--color-overgrowth-neon);
+    background-color: #EFEBD6; /* Cream */
+    padding: 6rem 2rem;
+    color: var(--color-overgrowth-forest);
     font-family: var(--font-body-family);
     position: relative;
     overflow: hidden;
+    border-top: 2px solid var(--color-overgrowth-forest);
+    border-bottom: 2px solid var(--color-overgrowth-forest);
   }
 
-  /* Grid Background */
+  /* Vintage Topographic Grid Background */
   .sector-map::before {
     content: '';
     position: absolute;
@@ -72,27 +74,47 @@
     width: 100%;
     height: 100%;
     background-image: 
-      linear-gradient(rgba(57, 255, 20, 0.1) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(57, 255, 20, 0.1) 1px, transparent 1px);
-    background-size: 40px 40px;
+      linear-gradient(var(--color-overgrowth-forest) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-overgrowth-forest) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.1;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Dashed Sub-grid */
+  .sector-map::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      linear-gradient(var(--color-overgrowth-forest) 1px, transparent 1px),
+      linear-gradient(90deg, var(--color-overgrowth-forest) 1px, transparent 1px);
+    background-size: 10px 10px;
+    opacity: 0.05;
     pointer-events: none;
     z-index: 0;
   }
 
   .sector-map__heading {
     text-align: center;
-    font-family: var(--font-heading-family);
-    font-size: 2.5rem;
-    margin-bottom: 3rem;
+    font-family: var(--font-heading-family); /* Cooper Black */
+    font-size: 3.5rem;
+    margin-bottom: 4rem;
     position: relative;
     z-index: 1;
-    text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+    color: var(--color-overgrowth-forest);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 
   .sector-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
     max-width: 1200px;
     margin: 0 auto;
     position: relative;
@@ -100,70 +122,57 @@
   }
 
   .sector-card {
-    border: 2px solid var(--color-overgrowth-neon);
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: #E8E4D9; /* Paper Color */
+    border: 2px solid var(--color-overgrowth-forest);
     padding: 2rem;
     text-decoration: none;
-    color: inherit;
+    color: var(--color-overgrowth-forest);
     position: relative;
-    overflow: hidden;
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 200px;
+    min-height: 220px;
+    box-shadow: 4px 4px 0 rgba(26, 59, 40, 0.15);
   }
 
   .sector-card:hover {
-    background-color: rgba(57, 255, 20, 0.1);
-    box-shadow: 0 0 20px rgba(57, 255, 20, 0.3);
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 rgba(26, 59, 40, 0.25);
+    background-color: #FDFBF7; /* Lighter Paper */
   }
 
   .sector-label {
+    font-family: var(--font-body-family); /* Courier */
     font-size: 0.9rem;
-    opacity: 0.8;
-    margin-bottom: 0.5rem;
-    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--color-overgrowth-forest);
+    padding-bottom: 0.2rem;
   }
 
   .sector-name {
-    font-size: 2rem;
-    font-weight: bold;
+    font-family: var(--font-heading-family); /* Cooper Black */
+    font-size: 2.5rem;
     text-transform: uppercase;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.05em;
   }
 
-  /* Scanline Effect on Hover */
-  .sector-card::after {
-    content: '';
-    position: absolute;
-    top: -100%;
-    left: 0;
-    width: 100%;
-    height: 50%;
-    background: linear-gradient(to bottom, transparent, rgba(57, 255, 20, 0.4), transparent);
-    transition: top 0.5s ease;
-    pointer-events: none;
-  }
-
-  .sector-card:hover::after {
-    top: 150%;
-    transition: top 1s linear;
-  }
-
-  /* Corner Accents */
+  /* "Map Pin" visual element (CSS only) */
   .sector-card::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border: 2px solid transparent;
-    /* Corner borders using gradients or clip-path is complex, let's use box-shadow inset for a techy feel */
-    box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
-    pointer-events: none;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 12px;
+    background-color: var(--color-overgrowth-rust);
+    border-radius: 50%;
+    border: 2px solid var(--color-overgrowth-forest);
+    z-index: 2;
   }
 
 </style>
