@@ -36,6 +36,20 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    border-bottom: 4px solid #1A3B28; /* Deep Green Border */
+  }
+
+  /* Vignette Overlay */
+  .parallax-hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, transparent 50%, rgba(26, 59, 40, 0.4) 100%);
+    pointer-events: none;
+    z-index: 4;
   }
 
   .parallax-layer {
@@ -64,22 +78,23 @@
     top: 20%;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 2;
+    z-index: 5; /* Above vignette */
     transform-origin: top center;
-    animation: sway 3s ease-in-out infinite alternate;
+    animation: sway 4s ease-in-out infinite alternate;
   }
 
   .sign-board {
-    background: var(--color-overgrowth-rust);
-    color: var(--color-overgrowth-cream);
-    padding: 1rem 2rem;
-    border: 4px solid #000;
+    background: #C17A5B; /* Rust */
+    color: #EFEBD6; /* Cream */
+    padding: 1.5rem 3rem;
+    border: 4px double #1A3B28; /* Double Green Border */
     font-family: var(--font-heading-family);
-    font-size: 2rem;
+    font-size: 2.5rem;
     text-transform: uppercase;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
     text-align: center;
     position: relative;
+    text-shadow: 2px 2px 0px #1A3B28;
   }
 
   /* Chains holding the sign */
@@ -88,9 +103,15 @@
     content: '';
     position: absolute;
     top: -100px;
-    width: 4px;
+    width: 6px;
     height: 100px;
-    background: #333;
+    background: repeating-linear-gradient(
+      to bottom,
+      #333,
+      #333 10px,
+      #111 10px,
+      #111 20px
+    ); /* Chain link effect */
   }
 
   .sign-container::before { left: 20px; }
@@ -107,11 +128,12 @@
     }
     .sign-board {
       font-size: 1.5rem;
+      padding: 1rem 2rem;
     }
   }
 </style>
 
-<div class="parallax-hero reveal-on-scroll">
+<div class="parallax-hero">
   {% if section.settings.background_image != blank %}
     <div class="parallax-layer layer-bg" style="background-image: url('{{ section.settings.background_image | image_url: width: 2000 }}');"></div>
   {% else %}
