@@ -1605,39 +1605,11 @@ a.product__text {
   transition: opacity 0.1s;
 }
 
-.product-form__submit:active::before {
-  opacity: 1;
-}
-
-@keyframes glitch-skew {
-  0% {
-    transform: skew(0deg);
-  }
-
-  20% {
-    transform: skew(-10deg);
-  }
-
-  40% {
-    transform: skew(10deg);
-  }
-
-  60% {
-    transform: skew(-5deg);
-  }
-
-  margin-right: 1.2rem;
-  flex-shrink: 0;
-}
-
-.recipient-form .icon-checkmark {
-  visibility: hidden;
-  position: absolute;
-  left: 0.28rem;
-  z-index: 5;
-  top: 0.4rem;
-  width: 10px;
-  height: 9px;
+left: 0.28rem;
+z-index: 5;
+top: 0.4rem;
+width: 10px;
+height: 9px;
 }
 
 .recipient-form>input[type='checkbox']:checked+label .icon-checkmark {
