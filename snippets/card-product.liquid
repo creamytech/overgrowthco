@@ -32,10 +32,10 @@
 <style>
   /* Polaroid Card Styles */
   .product-card-wrapper .card {
-    border: 12px solid #FDFBF7;
+    border: 12px solid var(--color-overgrowth-card-bg);
     border-bottom-width: 50px; /* Space for text */
-    background-color: #FDFBF7;
-    box-shadow: 3px 5px 15px rgba(0,0,0,0.15);
+    background-color: var(--color-overgrowth-card-bg);
+    box-shadow: 3px 5px 15px rgba(0, 0, 0, 0.15);
     overflow: visible; /* Allow content to overlap */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border-radius: 2px;
@@ -43,7 +43,7 @@
 
   .product-card-wrapper:hover .card {
     transform: scale(1.02) rotate(0deg) !important;
-    box-shadow: 5px 10px 25px rgba(0,0,0,0.25);
+    box-shadow: 5px 10px 25px rgba(0, 0, 0, 0.25);
     z-index: 10;
   }
 
@@ -52,7 +52,7 @@
     font-family: var(--font-heading-family); /* Use the Serif font for a "stamped" look */
     font-size: 1.4rem;
     letter-spacing: 0.05em;
-    color: #222;
+    color: rgb(var(--color-foreground));
     margin-top: 10px;
   }
 
@@ -68,8 +68,8 @@
     background-color: var(--color-overgrowth-rust);
     color: #fff;
     transform: rotate(-5deg);
-    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
-    border: 1px dashed rgba(255,255,255,0.5);
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    border: 1px dashed rgba(255, 255, 255, 0.5);
     font-family: var(--font-body-family);
   }
 
@@ -81,7 +81,7 @@
   .grid__item:nth-child(even) .product-card-wrapper .card {
     transform: rotate(-1deg);
   }
-  
+
   .grid__item:nth-child(3n) .product-card-wrapper .card {
     transform: rotate(1.5deg);
   }

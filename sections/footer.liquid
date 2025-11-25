@@ -29,26 +29,12 @@
 
 <style>
   .footer {
-    background-color: #1A3B28 !important; /* Deep Forest Green */
-    color: #EFEBD6 !important; /* Cream */
+    background-color: var(--color-overgrowth-forest) !important; /* Deep Forest Green */
+    color: var(--color-overgrowth-cream) !important; /* Cream */
     position: relative;
     border-top: none;
   }
 
-  /* Wavy Border SVG */
-  .footer__wave {
-    position: absolute;
-    top: -20px;
-    left: 0;
-    width: 100%;
-    height: 20px;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,0V46.29c47,24.5,94,38.29,158,40,70,2,136-19,186-34,50-15,100-30,150-30s100,15,150,30c50,15,116,36,186,34,64-1.71,111-15.5,158-40V0Z' fill='%23EFEBD6'/%3E%3C/svg%3E");
-    background-size: cover;
-    background-repeat: no-repeat;
-    transform: rotate(180deg);
-    z-index: 1;
-  }
-  
   /* Actually, let's just use a simple border-image or a pseudo element for the wave if possible, 
      but SVG separator is cleaner. Let's try a simpler wave. */
   .footer::before {
@@ -58,12 +44,12 @@
     left: 0;
     width: 100%;
     height: 15px;
-    background-color: #EFEBD6;
+    background-color: var(--color-overgrowth-cream);
     mask-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' viewBox='0 0 1200 60' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,0 C150,60 350,0 600,30 C850,60 1050,0 1200,30 V60 H0 V0 Z' fill='black'/%3E");
     -webkit-mask-image: url("data:image/svg+xml,%3Csvg width='100%25' height='100%25' viewBox='0 0 1200 60' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,0 C150,60 350,0 600,30 C850,60 1050,0 1200,30 V60 H0 V0 Z' fill='black'/%3E");
     mask-size: 100% 100%;
     -webkit-mask-size: 100% 100%;
-    background-color: #1A3B28; /* The wave is green, pointing up into the cream section */
+    background-color: var(--color-overgrowth-forest); /* The wave is green, pointing up into the cream section */
     /* Wait, if the footer is green and the section above is cream, we want the green to wave UP into the cream. */
   }
 
@@ -74,28 +60,28 @@
 
   /* The Transmission Box */
   .footer-block--newsletter {
-    background-color: #1A3B28;
-    border: 2px solid #EFEBD6;
+    background-color: var(--color-overgrowth-forest);
+    border: 2px solid var(--color-overgrowth-cream);
     padding: 3rem;
     text-align: center;
     max-width: 600px;
     margin: 0 auto 4rem auto;
     position: relative;
-    box-shadow: 0 0 0 4px #1A3B28, 0 0 0 6px #EFEBD6; /* Double border effect */
+    box-shadow: 0 0 0 4px var(--color-overgrowth-forest), 0 0 0 6px var(--color-overgrowth-cream); /* Double border effect */
   }
 
   .footer-block--newsletter::before {
     content: '|||';
     display: block;
     font-family: monospace;
-    color: #EFEBD6;
+    color: var(--color-overgrowth-cream);
     letter-spacing: 5px;
     margin-bottom: 1rem;
     font-size: 1.2rem;
   }
 
   .footer-block__heading {
-    color: #EFEBD6;
+    color: var(--color-overgrowth-cream);
     font-family: var(--font-heading-family); /* Cooper Black / Serif */
     font-size: 3rem;
     text-transform: uppercase;
@@ -107,48 +93,48 @@
     font-family: 'Courier New', Courier, monospace;
     font-size: 1.2rem;
     margin-bottom: 2rem;
-    color: #B0C4B1;
+    color: var(--color-overgrowth-sage);
   }
 
   /* Input Fields */
   .field__input {
-    background-color: #0F2619 !important;
-    color: #EFEBD6 !important;
-    border: 1px solid #4A6B56 !important;
+    background-color: var(--color-overgrowth-forest-dark) !important;
+    color: var(--color-overgrowth-cream) !important;
+    border: 1px solid var(--color-overgrowth-moss) !important;
     font-family: 'Courier New', Courier, monospace;
   }
 
   .field__input:focus {
-    border-color: #EFEBD6 !important;
-    box-shadow: 0 0 0 1px #EFEBD6 !important;
+    border-color: var(--color-overgrowth-cream) !important;
+    box-shadow: 0 0 0 1px var(--color-overgrowth-cream) !important;
   }
 
   .field__label {
-    color: #6E8C78 !important;
+    color: var(--color-overgrowth-muted-green) !important;
     font-family: 'Courier New', Courier, monospace;
   }
 
   .newsletter-form__button {
-    background-color: #2E5C40 !important;
-    color: #EFEBD6 !important;
+    background-color: var(--color-overgrowth-button-green) !important;
+    color: var(--color-overgrowth-cream) !important;
     font-family: 'Courier New', Courier, monospace;
     text-transform: uppercase;
     font-weight: bold;
     width: auto !important;
     padding: 0 2rem !important;
     margin-left: 1rem;
-    border: 1px solid #EFEBD6 !important;
+    border: 1px solid var(--color-overgrowth-cream) !important;
     transition: all 0.3s ease;
   }
 
   .newsletter-form__button:hover {
-    background-color: #EFEBD6 !important;
-    color: #1A3B28 !important;
+    background-color: var(--color-overgrowth-cream) !important;
+    color: var(--color-overgrowth-forest) !important;
   }
 
   /* Links */
   .list-menu__item--link {
-    color: #B0C4B1;
+    color: var(--color-overgrowth-sage);
     font-family: 'Courier New', Courier, monospace;
     text-transform: uppercase;
     font-size: 1.1rem;
@@ -156,12 +142,12 @@
   }
 
   .list-menu__item--link:hover {
-    color: #EFEBD6;
+    color: var(--color-overgrowth-cream);
     text-decoration: none;
   }
 
   .footer__copyright {
-    color: #6E8C78;
+    color: var(--color-overgrowth-muted-green);
     font-family: 'Courier New', Courier, monospace;
     margin-top: 2rem;
   }
@@ -170,8 +156,14 @@
 <footer class="footer color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">
   <!-- Wavy Top Border -->
   <div style="position: absolute; top: -29px; left: 0; width: 100%; overflow: hidden; line-height: 0;">
-    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none" style="position: relative; display: block; width: calc(100% + 1.3px); height: 30px;">
-        <path d="M0,0V46.29c47,24.5,94,38.29,158,40,70,2,136-19,186-34,50-15,100-30,150-30s100,15,150,30c50,15,116,36,186,34,64-1.71,111-15.5,158-40V0Z" fill="#1A3B28"></path>
+    <svg
+      data-name="Layer 1"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 1200 120"
+      preserveAspectRatio="none"
+      style="position: relative; display: block; width: calc(100% + 1.3px); height: 30px;"
+    >
+      <path d="M0,0V46.29c47,24.5,94,38.29,158,40,70,2,136-19,186-34,50-15,100-30,150-30s100,15,150,30c50,15,116,36,186,34,64-1.71,111-15.5,158-40V0Z" fill="var(--color-overgrowth-forest)"></path>
     </svg>
   </div>
 
@@ -183,13 +175,15 @@
   -%}
     {%- unless only_empty_brand -%}
       <div class="footer__content-top page-width">
-        
         <!-- The Transmission (Newsletter) - Centered and Prominent -->
         {%- if section.settings.newsletter_enable -%}
           <div class="footer-block--newsletter">
             <div class="footer-block__newsletter">
               <h2 class="footer-block__heading inline-richtext">THE TRANSMISSION</h2>
-              <p>Join fellow scavengers. Be notified when new artifacts are recovered from the zone. Secure channels only.</p>
+              <p>
+                Join fellow scavengers. Be notified when new artifacts are recovered from the zone. Secure channels
+                only.
+              </p>
               {%- form 'customer', id: 'ContactFooter', class: 'footer__newsletter newsletter-form' -%}
                 <input type="hidden" name="contact[tags]" value="newsletter">
                 <div class="newsletter-form__field-wrapper">
@@ -214,9 +208,7 @@
                       placeholder="YOUR EMAIL"
                       required
                     >
-                    <label class="field__label" for="NewsletterForm--{{ section.id }}">
-                      YOUR EMAIL
-                    </label>
+                    <label class="field__label" for="NewsletterForm--{{ section.id }}"> YOUR EMAIL </label>
                     <button
                       type="submit"
                       class="newsletter-form__button field__button"
@@ -256,53 +248,61 @@
         {%- endif -%}
 
         <!-- Link Columns -->
-        <div class="footer__blocks-wrapper grid grid--1-col grid--2-col grid--4-col-tablet {{ footer_grid_class }}" style="justify-content: center; text-align: center;">
-            {%- for block in section.blocks -%}
-              {%- if block.type != 'newsletter' -%}
-                  <div
-                    class="footer-block grid__item{% if block.type == 'link_list' %} footer-block--menu{% endif %}"
-                    {{ block.shopify_attributes }}
+        <div
+          class="footer__blocks-wrapper grid grid--1-col grid--2-col grid--4-col-tablet {{ footer_grid_class }}"
+          style="justify-content: center; text-align: center;"
+        >
+          {%- for block in section.blocks -%}
+            {%- if block.type != 'newsletter' -%}
+              <div
+                class="footer-block grid__item{% if block.type == 'link_list' %} footer-block--menu{% endif %}"
+                {{ block.shopify_attributes }}
+              >
+                {%- if block.settings.heading != blank -%}
+                  <h2
+                    class="footer-block__heading inline-richtext"
+                    style="font-size: 1.2rem; color: var(--color-overgrowth-muted-green);"
                   >
-                    {%- if block.settings.heading != blank -%}
-                      <h2 class="footer-block__heading inline-richtext" style="font-size: 1.2rem; color: #6E8C78;">{{- block.settings.heading -}}</h2>
+                    {{- block.settings.heading -}}
+                  </h2>
+                {%- endif -%}
+
+                {%- case block.type -%}
+                  {%- when 'text' -%}
+                    <div class="footer-block__details-content rte">
+                      {{ block.settings.subtext }}
+                    </div>
+                  {%- when 'link_list' -%}
+                    {%- if block.settings.menu != blank -%}
+                      <ul class="footer-block__details-content list-unstyled">
+                        {%- for link in block.settings.menu.links -%}
+                          <li>
+                            <a
+                              href="{{ link.url }}"
+                              class="link link--text list-menu__item list-menu__item--link{% if link.active %} list-menu__item--active{% endif %}"
+                            >
+                              {{ link.title | escape }}
+                            </a>
+                          </li>
+                        {%- endfor -%}
+                      </ul>
                     {%- endif -%}
-    
-                    {%- case block.type -%}
-                      {%- when 'text' -%}
-                        <div class="footer-block__details-content rte">
-                          {{ block.settings.subtext }}
-                        </div>
-                      {%- when 'link_list' -%}
-                        {%- if block.settings.menu != blank -%}
-                          <ul class="footer-block__details-content list-unstyled">
-                            {%- for link in block.settings.menu.links -%}
-                              <li>
-                                <a
-                                  href="{{ link.url }}"
-                                  class="link link--text list-menu__item list-menu__item--link{% if link.active %} list-menu__item--active{% endif %}"
-                                >
-                                  {{ link.title | escape }}
-                                </a>
-                              </li>
-                            {%- endfor -%}
-                          </ul>
-                        {%- endif -%}
-                      {%- when 'brand_information' -%}
-                        <div class="footer-block__brand-info">
-                          {%- if settings.brand_headline != blank -%}
-                            <h2 class="footer-block__heading rte">{{ settings.brand_headline }}</h2>
-                          {%- endif -%}
-                          {%- if settings.brand_description != blank -%}
-                            <div class="rte">{{ settings.brand_description }}</div>
-                          {%- endif -%}
-                          {%- if block.settings.show_social and has_social_icons -%}
-                            {%- render 'social-icons', class: 'footer__list-social' -%}
-                          {%- endif -%}
-                        </div>
-                    {%- endcase -%}
-                  </div>
-              {%- endif -%}
-            {%- endfor -%}
+                  {%- when 'brand_information' -%}
+                    <div class="footer-block__brand-info">
+                      {%- if settings.brand_headline != blank -%}
+                        <h2 class="footer-block__heading rte">{{ settings.brand_headline }}</h2>
+                      {%- endif -%}
+                      {%- if settings.brand_description != blank -%}
+                        <div class="rte">{{ settings.brand_description }}</div>
+                      {%- endif -%}
+                      {%- if block.settings.show_social and has_social_icons -%}
+                        {%- render 'social-icons', class: 'footer__list-social' -%}
+                      {%- endif -%}
+                    </div>
+                {%- endcase -%}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
         </div>
       </div>
     {%- endunless -%}

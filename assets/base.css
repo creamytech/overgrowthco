@@ -1,27 +1,3 @@
-:root {
-  --alpha-button-background: 1;
-  --alpha-button-border: 1;
-  --alpha-link: 0.85;
-  --alpha-badge-border: 0.1;
-  --focused-base-outline: 0.2rem solid rgba(var(--color-foreground), 0.5);
-  --focused-base-outline-offset: 0.3rem;
-  --focused-base-box-shadow: 0 0 0 0.3rem rgb(var(--color-background)), 0 0 0.5rem 0.4rem rgba(var(--color-foreground), 0.3);
-
-  /* Overgrowth Global Variables */
-  --color-overgrowth-cream: #EFEBD6;
-  --color-overgrowth-paper: #E8E4D9;
-  --color-overgrowth-forest: #1A3B28;
-  --color-overgrowth-neon: #39FF14;
-  --color-overgrowth-rust: #C17A5B;
-
-  /* Typography Overrides */
-  --font-heading-family: "Cooper Black", "Goudy Old Style", "Souvenir", serif;
-  --font-body-family: "Courier Prime", "Space Mono", "IBM Plex Mono", monospace;
-}
-
-/* Global Texture Overlay */
-body::after {
-  content: "";
   position: fixed;
   top: 0;
   left: 0;
@@ -1203,17 +1179,6 @@ deferred-media {
 }
 
 /* component-button */
-/* Button - default */
-
-.button--secondary,
-.button--tertiary {
-  --color-button: var(--color-secondary-button);
-  --color-button-text: var(--color-secondary-button-text);
-}
-
-.button--tertiary {
-  --alpha-button-background: 0;
-  --alpha-button-border: 0.2;
 }
 
 .button,
@@ -1589,23 +1554,6 @@ details[open]>.share-button__fallback {
   display: none;
 }
 
-/* component-form */
-.field__input,
-.select__select,
-.customer .field input,
-.customer select {
-  -webkit-appearance: none;
-  appearance: none;
-  background-color: rgb(var(--color-background));
-  color: rgb(var(--color-foreground));
-  font-family: var(--font-body-family);
-  font-style: var(--font-body-style);
-  font-weight: var(--font-body-weight);
-  font-size: 1.6rem;
-  width: 100%;
-  box-sizing: border-box;
-  transition: box-shadow var(--duration-short) ease;
-  border-radius: var(--inputs-radius);
   height: 4.5rem;
   min-height: calc(var(--inputs-border-width) * 2);
   min-width: calc(7rem + (var(--inputs-border-width) * 2));
@@ -3782,6 +3730,201 @@ body::after {
 
 /* 4. Scroll Reveal */
 .reveal-on-scroll {
+
+.loading__spinner:not(.hidden)~cart-remove-button {
+  pointer-events: none;
+  cursor: default;
+}
+
+/* Progress bar */
+.progress-bar-container {
+  width: 100%;
+  margin: auto;
+}
+
+.progress-bar {
+  height: 0.13rem;
+  width: 100%;
+}
+
+.progress-bar-value {
+  width: 100%;
+  height: 100%;
+  background-color: rgb(var(--color-foreground));
+  animation: indeterminateAnimation var(--duration-extra-longer) infinite ease-in-out;
+  transform-origin: 0;
+}
+
+.progress-bar .progress-bar-value {
+  display: block;
+}
+
+@keyframes indeterminateAnimation {
+  0% {
+    transform: translateX(-20%) scaleX(0);
+  }
+
+  40% {
+    transform: translateX(30%) scaleX(0.7);
+  }
+
+  100% {
+    transform: translateX(100%) scaleX(0);
+  }
+}
+
+/* =========================================
+   OVERGROWTH: ANIMATIONS & JUICE
+   ========================================= */
+
+/* 1. Custom Crosshair Cursor */
+body {
+  cursor: url('data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 4V20M4 12H20" stroke="%2339FF14" stroke-width="2"/></svg>') 12 12, auto;
+}
+
+a:hover,
+button:hover,
+.button:hover,
+summary:hover {
+  cursor: url('data:image/svg+xml;utf8,<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2V22M2 12H22" stroke="%23FF4500" stroke-width="3"/></svg>') 12 12, pointer;
+}
+
+/* 2. CRT Page Transitions */
+#crt-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #000;
+  z-index: 9999;
+  pointer-events: none;
+  animation: turnOn 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+@keyframes turnOn {
+  0% {
+    transform: scale(1, 0.002);
+    opacity: 1;
+  }
+
+  30% {
+    transform: scale(1, 0.002);
+    opacity: 1;
+  }
+
+  60% {
+    transform: scale(1, 1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1, 1);
+    opacity: 0;
+    display: none;
+  }
+}
+
+/* Scanline Overlay */
+body::after {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+  z-index: 9998;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+}
+
+/* 3. Glitch Text Effect */
+.glitch-text {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+}
+
+.glitch-text::before {
+  left: 2px;
+  text-shadow: -1px 0 #ff00c1;
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim 5s infinite linear alternate-reverse;
+}
+
+.glitch-text::after {
+  left: -2px;
+  text-shadow: -1px 0 #00fff9;
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim2 5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+  0% {
+    clip: rect(12px, 9999px, 52px, 0);
+  }
+
+  20% {
+    clip: rect(67px, 9999px, 98px, 0);
+  }
+
+  40% {
+    clip: rect(21px, 9999px, 3px, 0);
+  }
+
+  60% {
+    clip: rect(89px, 9999px, 12px, 0);
+  }
+
+  80% {
+    clip: rect(2px, 9999px, 45px, 0);
+  }
+
+  100% {
+    clip: rect(56px, 9999px, 78px, 0);
+  }
+}
+
+@keyframes glitch-anim2 {
+  0% {
+    clip: rect(65px, 9999px, 100px, 0);
+  }
+
+  20% {
+    clip: rect(23px, 9999px, 12px, 0);
+  }
+
+  40% {
+    clip: rect(8px, 9999px, 45px, 0);
+  }
+
+  60% {
+    clip: rect(92px, 9999px, 34px, 0);
+  }
+
+  80% {
+    clip: rect(34px, 9999px, 67px, 0);
+  }
+
+  100% {
+    clip: rect(12px, 9999px, 89px, 0);
+  }
+}
+
+/* 4. Scroll Reveal */
+.reveal-on-scroll {
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 0.8s ease-out, transform 0.8s ease-out;
@@ -3790,4 +3933,631 @@ body::after {
 .reveal-on-scroll.is-visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* CRT Page Transitions */
+body {
+  transition: opacity 0.5s ease-in-out, filter 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+body.page-transitioning {
+  opacity: 0;
+  filter: blur(10px) grayscale(100%);
+  transform: scale(0.98);
+}
+
+body.page-loaded {
+  opacity: 1;
+  filter: blur(0) grayscale(0%);
+  transform: scale(1);
+}
+
+/* CRT Scanline Overlay (Optional) */
+body::before {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+  z-index: 9998;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+  opacity: 0.4;
+}
+/* 5. Specimen Analysis Grid */
+.specimen-grid {
+  display: grid;
+  gap: 2rem;
+  padding: 2rem;
+  background-image: 
+    linear-gradient(rgba(26, 59, 40, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 59, 40, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  border: 2px solid var(--color-overgrowth-forest);
+}
+
+.specimen-grid .card {
+  border: 1px solid var(--color-overgrowth-forest);
+  background: rgba(26, 59, 40, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.specimen-grid .card::before {
+  content: "SPECIMEN-" attr(data-product-id);
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  font-family: var(--font-body-family);
+  font-size: 0.8rem;
+  color: var(--color-overgrowth-forest);
+  opacity: 0.7;
+  z-index: 2;
+}
+
+.specimen-grid .card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid transparent;
+  transition: border-color 0.3s ease;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.specimen-grid .card:hover::after {
+  border-color: var(--color-overgrowth-neon);
+}
+
+/* X-Ray Hover Effect */
+.specimen-grid .card:hover .card__media {
+  filter: invert(1) hue-rotate(180deg) contrast(1.2);
+}
+
+.specimen-grid .card:hover .media--hover-effect > img:first-child:only-child {
+  opacity: 0.5;
+}
+
+.specimen-grid .card:hover .media--hover-effect > img + img {
+  opacity: 1;
+  transition: transform var(--duration-long) ease, opacity var(--duration-long) ease;
+  transform: scale(1.05);
+}
+
+/* Technical Data Overlay */
+.specimen-grid .card:hover .card__content::before {
+  content: "ANALYZING...";
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  width: 100%;
+  background: var(--color-overgrowth-neon);
+  color: #000;
+  font-family: var(--font-body-family);
+  font-size: 0.9rem;
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+}
+
+.glitch-text::before {
+  left: 2px;
+  text-shadow: -1px 0 #ff00c1;
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim 5s infinite linear alternate-reverse;
+}
+
+.glitch-text::after {
+  left: -2px;
+  text-shadow: -1px 0 #00fff9;
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim2 5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+  0% {
+    clip: rect(12px, 9999px, 52px, 0);
+  }
+
+  20% {
+    clip: rect(67px, 9999px, 98px, 0);
+  }
+
+  40% {
+    clip: rect(21px, 9999px, 3px, 0);
+  }
+
+  60% {
+    clip: rect(89px, 9999px, 12px, 0);
+  }
+
+  80% {
+    clip: rect(2px, 9999px, 45px, 0);
+  }
+
+  100% {
+    clip: rect(56px, 9999px, 78px, 0);
+  }
+}
+
+@keyframes glitch-anim2 {
+  0% {
+    clip: rect(65px, 9999px, 100px, 0);
+  }
+
+  20% {
+    clip: rect(23px, 9999px, 12px, 0);
+  }
+
+  40% {
+    clip: rect(8px, 9999px, 45px, 0);
+  }
+
+  60% {
+    clip: rect(92px, 9999px, 34px, 0);
+  }
+
+  80% {
+    clip: rect(34px, 9999px, 67px, 0);
+  }
+
+  100% {
+    clip: rect(12px, 9999px, 89px, 0);
+  }
+}
+
+/* 4. Scroll Reveal */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* CRT Page Transitions */
+body {
+  transition: opacity 0.5s ease-in-out, filter 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+body.page-transitioning {
+  opacity: 0;
+  filter: blur(10px) grayscale(100%);
+  transform: scale(0.98);
+}
+
+body.page-loaded {
+  opacity: 1;
+  filter: blur(0) grayscale(0%);
+  transform: scale(1);
+}
+
+/* CRT Scanline Overlay (Optional) */
+body::before {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+  z-index: 9998;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+  opacity: 0.4;
+/* 5. Specimen Analysis Grid */
+.specimen-grid {
+  display: grid;
+  gap: 2rem;
+  padding: 2rem;
+  background-image: 
+    linear-gradient(rgba(26, 59, 40, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 59, 40, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  border: 2px solid var(--color-overgrowth-forest);
+}
+
+.specimen-grid .card {
+  border: 1px solid var(--color-overgrowth-forest);
+  background: rgba(26, 59, 40, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.specimen-grid .card::before {
+  content: "SPECIMEN-" attr(data-product-id);
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  font-family: var(--font-body-family);
+  font-size: 0.8rem;
+  color: var(--color-overgrowth-forest);
+  opacity: 0.7;
+  z-index: 2;
+}
+
+.specimen-grid .card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid transparent;
+  transition: border-color 0.3s ease;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.specimen-grid .card:hover::after {
+  border-color: var(--color-overgrowth-neon);
+}
+
+/* X-Ray Hover Effect */
+.specimen-grid .card:hover .card__media {
+  filter: invert(1) hue-rotate(180deg) contrast(1.2);
+}
+
+.specimen-grid .card:hover .media--hover-effect > img:first-child:only-child {
+  opacity: 0.5;
+}
+
+.specimen-grid .card:hover .media--hover-effect > img + img {
+  opacity: 1;
+  transition: transform var(--duration-long) ease, opacity var(--duration-long) ease;
+  transform: scale(1.05);
+}
+
+/* Technical Data Overlay */
+.specimen-grid .card:hover .card__content::before {
+  content: "ANALYZING...";
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  width: 100%;
+  background: var(--color-overgrowth-neon);
+  color: #000;
+  font-family: var(--font-body-family);
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 2px 0;
+  animation: blink 0.5s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* 6. Cart Inventory Slots & Physics */
+.inventory-slot {
+  background-color: rgba(26, 59, 40, 0.05);
+  border: 1px solid var(--color-overgrowth-forest);
+  margin-bottom: 1rem;
+  position: relative;
+  transition: transform 0.2s ease;
+}
+
+.inventory-slot:hover {
+  background-color: rgba(26, 59, 40, 0.1);
+  box-shadow: inset 0 0 10px rgba(26, 59, 40, 0.2);
+}
+
+.inventory-slot td {
+  padding: 1rem;
+  vertical-align: middle;
+}
+
+/* Crate Drop Animation */
+@keyframes crateDrop {
+  0% {
+    transform: translateY(-50px) scale(1.1);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(10px) scale(1);
+    opacity: 1;
+  }
+  80% {
+    transform: translateY(-5px);
+  }
+  80% {
+    clip: rect(2px, 9999px, 45px, 0);
+  }
+
+  100% {
+    clip: rect(56px, 9999px, 78px, 0);
+  }
+}
+
+@keyframes glitch-anim2 {
+  0% {
+    clip: rect(65px, 9999px, 100px, 0);
+  }
+
+  20% {
+    clip: rect(23px, 9999px, 12px, 0);
+  }
+
+  40% {
+    clip: rect(8px, 9999px, 45px, 0);
+  }
+
+  60% {
+    clip: rect(92px, 9999px, 34px, 0);
+  }
+
+  80% {
+    clip: rect(34px, 9999px, 67px, 0);
+  }
+
+  100% {
+    clip: rect(12px, 9999px, 89px, 0);
+  }
+}
+
+/* 4. Scroll Reveal */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.reveal-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* CRT Page Transitions */
+body {
+  transition: opacity 0.5s ease-in-out, filter 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+body.page-transitioning {
+  opacity: 0;
+  filter: blur(10px) grayscale(100%);
+  transform: scale(0.98);
+}
+
+body.page-loaded {
+  opacity: 1;
+  filter: blur(0) grayscale(0%);
+  transform: scale(1);
+}
+
+/* CRT Scanline Overlay (Optional) */
+body::before {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+  z-index: 9998;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+  opacity: 0.4;
+/* 5. Specimen Analysis Grid */
+.specimen-grid {
+  display: grid;
+  gap: 2rem;
+  padding: 2rem;
+  background-image: 
+    linear-gradient(rgba(26, 59, 40, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 59, 40, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+  border: 2px solid var(--color-overgrowth-forest);
+}
+
+.specimen-grid .card {
+  border: 1px solid var(--color-overgrowth-forest);
+  background: rgba(26, 59, 40, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.specimen-grid .card::before {
+  content: "SPECIMEN-" attr(data-product-id);
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  font-family: var(--font-body-family);
+  font-size: 0.8rem;
+  color: var(--color-overgrowth-forest);
+  opacity: 0.7;
+  z-index: 2;
+}
+
+.specimen-grid .card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid transparent;
+  transition: border-color 0.3s ease;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.specimen-grid .card:hover::after {
+  border-color: var(--color-overgrowth-neon);
+}
+
+/* X-Ray Hover Effect */
+.specimen-grid .card:hover .card__media {
+  filter: invert(1) hue-rotate(180deg) contrast(1.2);
+}
+
+.specimen-grid .card:hover .media--hover-effect > img:first-child:only-child {
+  opacity: 0.5;
+}
+
+.specimen-grid .card:hover .media--hover-effect > img + img {
+  opacity: 1;
+  transition: transform var(--duration-long) ease, opacity var(--duration-long) ease;
+  transform: scale(1.05);
+}
+
+/* Technical Data Overlay */
+.specimen-grid .card:hover .card__content::before {
+  content: "ANALYZING...";
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  width: 100%;
+  background: var(--color-overgrowth-neon);
+  color: #000;
+  font-family: var(--font-body-family);
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 2px 0;
+  animation: blink 0.5s infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* 6. Cart Inventory Slots & Physics */
+.inventory-slot {
+  background-color: rgba(26, 59, 40, 0.05);
+  border: 1px solid var(--color-overgrowth-forest);
+  margin-bottom: 1rem;
+  position: relative;
+  transition: transform 0.2s ease;
+}
+
+.inventory-slot:hover {
+  background-color: rgba(26, 59, 40, 0.1);
+  box-shadow: inset 0 0 10px rgba(26, 59, 40, 0.2);
+}
+
+.inventory-slot td {
+  padding: 1rem;
+  vertical-align: middle;
+}
+
+/* Crate Drop Animation */
+@keyframes crateDrop {
+  0% {
+    transform: translateY(-50px) scale(1.1);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(10px) scale(1);
+    opacity: 1;
+  }
+  80% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.crate-drop-anim {
+  animation: crateDrop 0.6s cubic-bezier(0.25, 1.5, 0.5, 1);
+}
+
+/* 7. Bunker Access Terminal */
+.bunker-terminal-section {
+  background-color: #000;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.bunker-terminal {
+  width: 100%;
+  max-width: 800px;
+  border: 2px solid var(--color-overgrowth-neon);
+  background-color: rgba(0, 20, 0, 0.9);
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+  padding: 20px;
+  position: relative;
+}
+
+.bunker-terminal::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15),
+    rgba(0, 0, 0, 0.15) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  z-index: 10;
+}
+
+.terminal-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--color-overgrowth-neon);
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  color: var(--color-overgrowth-neon);
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+}
+
+.terminal-screen {
+  color: var(--color-overgrowth-neon);
+  text-shadow: 0 0 5px var(--color-overgrowth-neon);
+}
+
+.terminal-output p {
+  margin: 5px 0;
+  opacity: 0.8;
+}
+
+.terminal-input-line {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.terminal-input {
+  background: transparent;
+  border: none;
+  color: var(--color-overgrowth-neon);
+  font-family: inherit;
+  font-size: 1.2rem;
+  width: 100%;
+  outline: none;
+  text-transform: uppercase;
+  caret-color: transparent; /* Custom cursor used instead */
+}
+
+.cursor {
+  animation: blink 1s step-end infinite;
 }

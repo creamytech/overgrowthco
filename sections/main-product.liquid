@@ -117,13 +117,13 @@
                     price_class: 'price--large'
                   -%}
                 </div>
-                
+
                 <!-- Supply Status Box -->
                 <div class="supply-status-box">
                   <div class="supply-status-header">SUPPLY STATUS</div>
                   <div class="supply-status-visual">
                     <svg viewBox="0 0 200 20" class="supply-wave">
-                      <path d="M0,10 Q50,20 100,10 T200,10" fill="none" stroke="#1A3B28" stroke-width="4" />
+                      <path d="M0,10 Q50,20 100,10 T200,10" fill="none" stroke="var(--color-overgrowth-forest)" stroke-width="4" />
                     </svg>
                   </div>
                   <div class="supply-level">
@@ -142,9 +142,18 @@
                       <span style="font-size: 2rem;">🐎</span>
                     </div>
                     <div class="field-log-details">
-                      <p><strong>FOUND LOCATION:</strong><br>Route 66, Mile Marker 219</p>
-                      <p><strong>CONDITION REPORT:</strong><br>Excellent. Minimal weathering.</p>
-                      <p><strong>FIELD NOTES:</strong><br>Pale Horse</p>
+                      <p>
+                        <strong>FOUND LOCATION:</strong><br>
+                        Route 66, Mile Marker 219
+                      </p>
+                      <p>
+                        <strong>CONDITION REPORT:</strong><br>
+                        Excellent. Minimal weathering.
+                      </p>
+                      <p>
+                        <strong>FIELD NOTES:</strong><br>
+                        Pale Horse
+                      </p>
                     </div>
                   </div>
                   <div class="field-log-corners"></div>
@@ -187,7 +196,7 @@
                       {%- if product.selected_or_first_available_variant.inventory_quantity
                           <= block.settings.inventory_threshold
                       -%}
-                        <span class="svg-wrapper" style="color: rgb(238, 148, 65)">
+                        <span class="svg-wrapper" style="color: var(--color-overgrowth-rust)">
                           {{- 'icon-inventory-status.svg' | inline_asset_content -}}
                         </span>
                         {%- if block.settings.show_inventory_quantity -%}
@@ -199,7 +208,7 @@
                           {{- 'products.product.inventory_low_stock' | t -}}
                         {%- endif -%}
                       {%- else -%}
-                        <span class="svg-wrapper" style="color: rgb(62, 214, 96)">
+                        <span class="svg-wrapper" style="color: var(--color-overgrowth-neon)">
                           {{- 'icon-inventory-status.svg' | inline_asset_content -}}
                         </span>
                         {%- if block.settings.show_inventory_quantity -%}
@@ -213,12 +222,12 @@
                       {%- endif -%}
                     {%- else -%}
                       {%- if product.selected_or_first_available_variant.inventory_policy == 'continue' -%}
-                        <span class="svg-wrapper" style="color: rgb(62, 214, 96)">
+                        <span class="svg-wrapper" style="color: var(--color-overgrowth-neon)">
                           {{- 'icon-inventory-status.svg' | inline_asset_content -}}
                         </span>
                         {{- 'products.product.inventory_out_of_stock_continue_selling' | t -}}
                       {%- else -%}
-                        <span class="svg-wrapper" style="color: rgb(200, 200, 200)">
+                        <span class="svg-wrapper" style="color: rgba(var(--color-foreground), 0.5)">
                           {{- 'icon-inventory-status.svg' | inline_asset_content -}}
                         </span>
                         {{- 'products.product.inventory_out_of_stock' | t -}}
