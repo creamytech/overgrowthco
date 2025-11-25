@@ -28,6 +28,68 @@
   {{ 'quick-order-list.css' | asset_url | stylesheet_tag }}
   {{ 'quantity-popover.css' | asset_url | stylesheet_tag }}
 {%- endunless -%}
+
+<style>
+  /* Polaroid Card Styles */
+  .product-card-wrapper .card {
+    border: 12px solid #FDFBF7;
+    border-bottom-width: 50px; /* Space for text */
+    background-color: #FDFBF7;
+    box-shadow: 3px 5px 15px rgba(0,0,0,0.15);
+    overflow: visible; /* Allow content to overlap */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 2px;
+  }
+
+  .product-card-wrapper:hover .card {
+    transform: scale(1.02) rotate(0deg) !important;
+    box-shadow: 5px 10px 25px rgba(0,0,0,0.25);
+    z-index: 10;
+  }
+
+  /* Typography */
+  .product-card-wrapper .card__heading {
+    font-family: var(--font-heading-family); /* Use the Serif font for a "stamped" look */
+    font-size: 1.4rem;
+    letter-spacing: 0.05em;
+    color: #222;
+    margin-top: 10px;
+  }
+
+  .product-card-wrapper .price {
+    font-family: var(--font-body-family); /* Monospace price */
+    color: var(--color-overgrowth-forest);
+    font-weight: bold;
+  }
+
+  /* Badges as Tape/Stamps */
+  .product-card-wrapper .badge {
+    border-radius: 0;
+    background-color: var(--color-overgrowth-rust);
+    color: #fff;
+    transform: rotate(-5deg);
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    border: 1px dashed rgba(255,255,255,0.5);
+    font-family: var(--font-body-family);
+  }
+
+  /* Random Rotations (Simulated) */
+  .grid__item:nth-child(odd) .product-card-wrapper .card {
+    transform: rotate(1deg);
+  }
+
+  .grid__item:nth-child(even) .product-card-wrapper .card {
+    transform: rotate(-1deg);
+  }
+  
+  .grid__item:nth-child(3n) .product-card-wrapper .card {
+    transform: rotate(1.5deg);
+  }
+
+  .grid__item:nth-child(4n) .product-card-wrapper .card {
+    transform: rotate(-0.5deg);
+  }
+</style>
 {%- if card_product and card_product != empty -%}
   {%- liquid
     assign ratio = 1

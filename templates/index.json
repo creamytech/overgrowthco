@@ -6,6 +6,37 @@
         "sign_text": "WE ARE OPEN"
       }
     },
+    "sector_map": {
+      "type": "sector-map",
+      "blocks": {
+        "sector_1": {
+          "type": "sector",
+          "settings": {
+            "sector_label": "SECTOR 01",
+            "sector_name": "TOPS"
+          }
+        },
+        "sector_2": {
+          "type": "sector",
+          "settings": {
+            "sector_label": "SECTOR 02",
+            "sector_name": "BOTTOMS"
+          }
+        },
+        "sector_3": {
+          "type": "sector",
+          "settings": {
+            "sector_label": "SECTOR 03",
+            "sector_name": "GEAR"
+          }
+        }
+      },
+      "block_order": [
+        "sector_1",
+        "sector_2",
+        "sector_3"
+      ]
+    },
     "rich_text": {
       "type": "rich-text",
       "blocks": {
@@ -161,6 +192,7 @@
   },
   "order": [
     "hero_parallax",
+    "sector_map",
     "rich_text",
     "featured_collection",
     "collage",
