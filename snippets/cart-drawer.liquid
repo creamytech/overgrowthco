@@ -15,6 +15,105 @@
   .drawer {
     visibility: hidden;
   }
+
+  /* OVERGROWTH: Requisition Form Styles */
+  .cart-drawer .drawer__inner {
+    background-color: #efebd6; /* Cream/Manila */
+    background-image: linear-gradient(#e0e0e0 1px, transparent 1px);
+    background-size: 100% 2rem; /* Ruled Paper Lines */
+    border-left: 5px solid var(--color-overgrowth-forest);
+    color: var(--color-overgrowth-forest);
+    font-family: var(--font-body-family); /* Courier */
+  }
+
+  .cart-drawer .drawer__header {
+    border-bottom: 3px double var(--color-overgrowth-forest);
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .cart-drawer .drawer__heading {
+    font-family: var(--font-heading-family); /* Cooper Black */
+    color: var(--color-overgrowth-forest);
+    text-transform: uppercase;
+    font-size: 2.5rem;
+    letter-spacing: 0.05em;
+    width: 100%;
+    text-align: center;
+  }
+
+  .cart-item__name {
+    font-family: var(--font-body-family);
+    font-weight: bold;
+    color: var(--color-overgrowth-forest);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .cart-item__price-wrapper,
+  .cart-item__totals {
+    font-family: var(--font-body-family);
+    color: var(--color-overgrowth-forest);
+  }
+
+  .cart-drawer .totals__total {
+    font-family: var(--font-heading-family);
+    color: var(--color-overgrowth-forest);
+    text-transform: uppercase;
+  }
+
+  .cart-drawer .totals__total-value {
+    font-family: var(--font-body-family);
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--color-overgrowth-forest);
+  }
+
+  .cart__checkout-button {
+    background-color: var(--color-overgrowth-forest);
+    color: #efebd6;
+    font-family: var(--font-heading-family);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border: 2px solid var(--color-overgrowth-forest);
+    transition: all 0.3s ease;
+  }
+
+  .cart__checkout-button:hover {
+    background-color: transparent;
+    color: var(--color-overgrowth-forest);
+    box-shadow: inset 0 0 10px rgba(26, 59, 40, 0.2);
+  }
+
+  /* Signature Block */
+  .signature-block {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    opacity: 0.8;
+  }
+
+  .signature-line {
+    border-bottom: 2px solid var(--color-overgrowth-forest);
+    height: 30px;
+    margin: 0 10% 5px 10%;
+    position: relative;
+  }
+
+  .signature-x {
+    position: absolute;
+    bottom: 2px;
+    left: 0;
+    font-family: var(--font-heading-family);
+    font-size: 1.2rem;
+  }
+
+  .signature-label {
+    font-family: var(--font-body-family);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
 </style>
 
 <cart-drawer class="drawer{% if cart == empty %} is-empty{% endif %}">
@@ -31,7 +130,7 @@
         <div class="drawer__inner-empty">
           <div class="cart-drawer__warnings center{% if settings.cart_drawer_collection != blank %} cart-drawer__warnings--has-collection{% endif %}">
             <div class="cart-drawer__empty-content">
-              <h2 class="cart__empty-text">{{ 'sections.cart.empty' | t }}</h2>
+              <h2 class="cart__empty-text">REQUISITION FORM EMPTY</h2>
               <button
                 class="drawer__close"
                 type="button"
@@ -42,9 +141,7 @@
                   {{- 'icon-close.svg' | inline_asset_content -}}
                 </span>
               </button>
-              <a href="{{ routes.all_products_collection_url }}" class="button">
-                {{ 'general.continue_shopping' | t }}
-              </a>
+              <a href="{{ routes.all_products_collection_url }}" class="button"> INITIATE SUPPLY REQUEST </a>
 
               {%- if shop.customer_accounts_enabled and customer == null -%}
                 <p class="cart__login-title h3">{{ 'sections.cart.login.title' | t }}</p>
@@ -62,7 +159,7 @@
         </div>
       {%- endif -%}
       <div class="drawer__header">
-        <h2 class="drawer__heading">{{ 'sections.cart.title' | t }}</h2>
+        <h2 class="drawer__heading">SUPPLY REQUISITION</h2>
         <button
           class="drawer__close"
           type="button"
@@ -258,7 +355,10 @@
                             {%- endif -%}
 
                             {%- if item.variant.available and item.unit_price_measurement -%}
-                              {% render 'unit-price', price: item.unit_price, measurement: item.unit_price_measurement %}
+                              {% render 'unit-price',
+                                price: item.unit_price,
+                                measurement: item.unit_price_measurement
+                              %}
                             {%- endif -%}
                           </div>
                         </td>
@@ -557,6 +657,14 @@
               {%- endif -%}
             {%- endif -%}
           </small>
+        </div>
+
+        <!-- Signature Block -->
+        <div class="signature-block">
+          <div class="signature-line">
+            <span class="signature-x">X</span>
+          </div>
+          <span class="signature-label">AUTHORIZED SIGNATURE</span>
         </div>
 
         <!-- CTAs -->
